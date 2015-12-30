@@ -73,6 +73,7 @@ def single_flake(path, string):
 def single_flake_png(path, string):
     fullpath = path + string + ".svg"
     pngpath = path + string + ".png"
+    single_flake(path, string)
     #Convert the svg to PNG
     #Thanks to http://stackoverflow.com/questions/6589358/convert-svg-to-png-in-python
     import cairo
