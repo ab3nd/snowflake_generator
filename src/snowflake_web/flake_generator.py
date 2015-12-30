@@ -27,7 +27,6 @@ def angle(a):
     return (((ord(a)-97)*(360/26))/2.0) * 0.0174533
 
 def snowflake(center, strSeed, dwg):
-    #center = (size[0]/2, size[1]/2)
     edge = dwg.defs.add(dwg.g(id="flake_edge{0}_{1}".format(center[0], center[1])))
     bg = dwg.defs.add(dwg.g(id="background{0}_{1}".format(center[0], center[1]), stroke="aqua", stroke_width=15, stroke_linecap='round'))
     fg = dwg.defs.add(dwg.g(id="foreground{0}_{1}".format(center[0], center[1]), stroke="black", stroke_width=2, stroke_linecap='round'))
@@ -44,7 +43,6 @@ def snowflake(center, strSeed, dwg):
         start = toUser((center[0],center[1] - d))
         end = toUser((center[0] + x, center[1] - y))
         edge.add(dwg.path(d="M {0},{1} L {2},{3}".format(start[0], start[1], end[0], end[1])))
-        #edge.add(dwg.line(toCm((center[0],center[1] - d)), toCm((center[0] + x, center[1] - y))))
     
     #Reflect the whole group across the centerline
     edge_m = dwg.defs.add(dwg.g(id="edge_b{0}_{1}".format(center[0], center[1])))
@@ -65,26 +63,25 @@ def snowflake(center, strSeed, dwg):
     dwg.add(bg)
     dwg.add(fg)
 
-def single_flake(path, string)
+def single_flake(path, string):
     size = (10,10)
     fullpath = path + string + ".svg"
     dwg = svgwrite.Drawing(fullpath, size=(toCm(size)), profile='full')
-    snowflake(5,5,string,dwg)
+    snowflake((5,5),string,dwg)
     dwg.save()
-        
+
+def single_flake_png(path, string):
+    fullpath = path + string + ".svg"
+    pngpath = path + string + ".png"
+    #Convert the svg to PNG
+    #Thanks to http://stackoverflow.com/questions/6589358/convert-svg-to-png-in-python
+    import cairo
+    import rsvg
+    img = cairo.ImageSurface(cairo.FORMAT_ARGB32, 350, 350)
+    ctx = cairo.Context(img)
+    handle = rsvg.Handle(fullpath)
+    handle.render_cairo(ctx)
+    img.write_to_png(pngpath)
+    
 if __name__ == '__main__':
-    size = (50, 30)
-    dwg = svgwrite.Drawing('test.svg', size=(toCm(size)), profile='full')
-    
-    index = 0
-    
-    names=["bookkeeper","dumbwaiter","madamimadam","wysiwyg"]
-    for yPos in range(5, 28, 9):
-        for xPos in range(5, 48, 9):
-            center = (xPos, yPos)
-            snowflake(center, names[index], dwg)
-            index += 1
-            if index >= len(names):
-                dwg.save()
-                sys.exit()
-                
+    single_flake("./flakes/", "testsnow")                
