@@ -22,4 +22,4 @@ def genPNG(user_string):
     return render_template('snowflake.html', img_path=pic_url, input_string=user_string)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
