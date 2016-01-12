@@ -9,7 +9,7 @@ def hello():
     return "Hello World!"
     
 @app.route("/png/<user_string>")
-def genSVG(user_string):
+def genPNG(user_string):
     #Strip out everything that's not a letter
     user_string = user_string.lower()
     user_string = re.sub("[^a-z]", "", user_string)
