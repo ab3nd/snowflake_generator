@@ -20,7 +20,6 @@ def genSVG(user_string):
     #Get the url to it
     pic_url = url_for('static', filename='{0}.png'.format(user_string))
     return render_template('snowflake.html', img_path=pic_url, input_string=user_string)
-    return "<html><head></head><body><img src=\"{0}\" alt=\"A snowflake\"></body></html>".format(pic_url)
     
 if __name__ == "__main__":
     app.run(debug=True)
