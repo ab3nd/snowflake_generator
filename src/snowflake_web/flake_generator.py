@@ -75,14 +75,8 @@ def single_flake_png(path, string):
     pngpath = path + string + ".png"
     single_flake(path, string)
     #Convert the svg to PNG
-    #Thanks to http://stackoverflow.com/questions/6589358/convert-svg-to-png-in-python
-    import cairo
-    import rsvg
-    img = cairo.ImageSurface(cairo.FORMAT_ARGB32, 350, 350)
-    ctx = cairo.Context(img)
-    handle = rsvg.Handle(fullpath)
-    handle.render_cairo(ctx)
-    img.write_to_png(pngpath)
+    import cairosvg
+    cairosvg.svg2png(url=fullpath, write_to=pngpath)
     
 if __name__ == '__main__':
     single_flake("./flakes/", "testsnow")                

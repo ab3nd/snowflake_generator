@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello():
-    return "Hello World!"
+    return "Visit snowflake.gizmosmith.com/png/string to see a snowflake"
     
 @app.route("/png/<user_string>")
 def genPNG(user_string):
@@ -20,6 +20,6 @@ def genPNG(user_string):
     #Get the url to it
     pic_url = url_for('static', filename='{0}.png'.format(user_string))
     return render_template('snowflake.html', img_path=pic_url, input_string=user_string)
-    
+
 if __name__ == "__main__":
     app.run(debug=True)
